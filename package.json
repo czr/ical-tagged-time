@@ -7,6 +7,10 @@
     "test": "jest"
   },
   "author": "Colin Z. Robertson",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/czr/ical-tagged-time.git"
+  },
   "license": "MIT",
   "dependencies": {
     "axios": "^0.18.0",
