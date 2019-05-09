@@ -2,18 +2,18 @@ const moment = require('moment')
 const { parseTimeTracking, taggedEvents } = require('./index')
 
 test('parseTimeTracking: no tags', () => {
-  since = moment('2001-01-01')
-  iCalStr = iCalNoTags()
-  result = parseTimeTracking(since, iCalStr)
-  expected = {}
+  const since = moment('2001-01-01')
+  const iCalStr = iCalNoTags()
+  const result = parseTimeTracking(since, iCalStr)
+  const expected = {}
   expect(result).toEqual(expected)
 })
 
 test('parseTimeTracking: one event', () => {
-  since = moment('2001-01-01')
-  iCalStr = iCal()
-  result = parseTimeTracking(since, iCalStr)
-  expected = {
+  const since = moment('2001-01-01')
+  const iCalStr = iCal()
+  const result = parseTimeTracking(since, iCalStr)
+  const expected = {
     'music': {
       '2018-12-06': 'PT1H',
     },
@@ -22,10 +22,10 @@ test('parseTimeTracking: one event', () => {
 })
 
 test('parseTimeTracking: two tags, one event', () => {
-  since = moment('2001-01-01')
-  iCalStr = iCalTwoTagsOneEvent()
-  result = parseTimeTracking(since, iCalStr)
-  expected = {
+  const since = moment('2001-01-01')
+  const iCalStr = iCalTwoTagsOneEvent()
+  const result = parseTimeTracking(since, iCalStr)
+  const expected = {
     'music': {
       '2018-12-06': 'PT1H',
     },
@@ -37,10 +37,10 @@ test('parseTimeTracking: two tags, one event', () => {
 })
 
 test('parseTimeTracking: two tags, two events', () => {
-  since = moment('2001-01-01')
-  iCalStr = iCalTwoTagsTwoEvents()
-  result = parseTimeTracking(since, iCalStr)
-  expected = {
+  const since = moment('2001-01-01')
+  const iCalStr = iCalTwoTagsTwoEvents()
+  const result = parseTimeTracking(since, iCalStr)
+  const expected = {
     'music': {
       '2018-12-06': 'PT1H',
     },
@@ -52,10 +52,10 @@ test('parseTimeTracking: two tags, two events', () => {
 })
 
 test('parseTimeTracking: two events, date filtered', () => {
-  since = moment('2010-01-01')
-  iCalStr = iCalTwoEventsDateFiltered()
-  result = parseTimeTracking(since, iCalStr)
-  expected = {
+  const since = moment('2010-01-01')
+  const iCalStr = iCalTwoEventsDateFiltered()
+  const result = parseTimeTracking(since, iCalStr)
+  const expected = {
     'music': {
       '2018-12-06': 'PT1H',
     },
@@ -64,10 +64,10 @@ test('parseTimeTracking: two events, date filtered', () => {
 })
 
 test('parseTimeTracking: case-insensitive', () => {
-  since = moment('2001-01-01')
-  iCalStr = iCalMixedCaseTag()
-  result = parseTimeTracking(since, iCalStr)
-  expected = {
+  const since = moment('2001-01-01')
+  const iCalStr = iCalMixedCaseTag()
+  const result = parseTimeTracking(since, iCalStr)
+  const expected = {
     'music': {
       '2018-12-06': 'PT1H',
     },
@@ -76,9 +76,9 @@ test('parseTimeTracking: case-insensitive', () => {
 })
 
 test('taggedEvents: two tags, two events', () => {
-  since = moment('2001-01-01')
-  iCalStr = iCalTwoTagsTwoEvents()
-  result = taggedEvents(since, iCalStr)
+  const since = moment('2001-01-01')
+  const iCalStr = iCalTwoTagsTwoEvents()
+  const result = taggedEvents(since, iCalStr)
 
   expect(result).toEqual({
     music: [
@@ -98,7 +98,7 @@ test('taggedEvents: two tags, two events', () => {
   })
 })
 
-function iCal() {
+function iCal () {
   return `
 BEGIN:VCALENDAR
 PRODID:-//Dummy//Unit Test//iCal
@@ -136,7 +136,7 @@ END:VCALENDAR
 `
 }
 
-function iCalNoTags() {
+function iCalNoTags () {
   return `
 BEGIN:VCALENDAR
 PRODID:-//Dummy//Unit Test//iCal
@@ -174,7 +174,7 @@ END:VCALENDAR
 `
 }
 
-function iCalTwoTagsOneEvent() {
+function iCalTwoTagsOneEvent () {
   return `
 BEGIN:VCALENDAR
 PRODID:-//Dummy//Unit Test//iCal
@@ -212,7 +212,7 @@ END:VCALENDAR
 `
 }
 
-function iCalTwoTagsTwoEvents() {
+function iCalTwoTagsTwoEvents () {
   return `
 BEGIN:VCALENDAR
 PRODID:-//Dummy//Unit Test//iCal
@@ -257,7 +257,7 @@ END:VCALENDAR
 `
 }
 
-function iCalTwoEventsDateFiltered() {
+function iCalTwoEventsDateFiltered () {
   return `
 BEGIN:VCALENDAR
 PRODID:-//Dummy//Unit Test//iCal
@@ -302,7 +302,7 @@ END:VCALENDAR
 `
 }
 
-function iCalMixedCaseTag() {
+function iCalMixedCaseTag () {
   return `
 BEGIN:VCALENDAR
 PRODID:-//Dummy//Unit Test//iCal
