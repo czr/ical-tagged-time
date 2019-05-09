@@ -1,18 +1,24 @@
 const moment = require('moment')
-const { parseTimeTracking, taggedEvents } = require('./index')
+const { TaggedTime } = require('./index')
 
-test('parseTimeTracking: no tags', () => {
+function okPromise (data) {
+  return new Promise((resolve, reject) => { resolve(data) })
+}
+
+test('parseTimeTracking: no tags', async () => {
   const since = moment('2001-01-01')
-  const iCalStr = iCalNoTags()
-  const result = parseTimeTracking(since, iCalStr)
+  const iCalPromise = okPromise(iCalNoTags())
+  const tt = new TaggedTime(iCalPromise, since)
+  const result = await tt.parseTimeTracking()
   const expected = {}
   expect(result).toEqual(expected)
 })
 
-test('parseTimeTracking: one event', () => {
+test('parseTimeTracking: one event', async () => {
   const since = moment('2001-01-01')
-  const iCalStr = iCal()
-  const result = parseTimeTracking(since, iCalStr)
+  const iCalPromise = okPromise(iCal())
+  const tt = new TaggedTime(iCalPromise, since)
+  const result = await tt.parseTimeTracking()
   const expected = {
     'music': {
       '2018-12-06': 'PT1H',
@@ -21,10 +27,11 @@ test('parseTimeTracking: one event', () => {
   expect(result).toEqual(expected)
 })
 
-test('parseTimeTracking: two tags, one event', () => {
+test('parseTimeTracking: two tags, one event', async () => {
   const since = moment('2001-01-01')
-  const iCalStr = iCalTwoTagsOneEvent()
-  const result = parseTimeTracking(since, iCalStr)
+  const iCalPromise = okPromise(iCalTwoTagsOneEvent())
+  const tt = new TaggedTime(iCalPromise, since)
+  const result = await tt.parseTimeTracking()
   const expected = {
     'music': {
       '2018-12-06': 'PT1H',
@@ -36,10 +43,11 @@ test('parseTimeTracking: two tags, one event', () => {
   expect(result).toEqual(expected)
 })
 
-test('parseTimeTracking: two tags, two events', () => {
+test('parseTimeTracking: two tags, two events', async () => {
   const since = moment('2001-01-01')
-  const iCalStr = iCalTwoTagsTwoEvents()
-  const result = parseTimeTracking(since, iCalStr)
+  const iCalPromise = okPromise(iCalTwoTagsTwoEvents())
+  const tt = new TaggedTime(iCalPromise, since)
+  const result = await tt.parseTimeTracking()
   const expected = {
     'music': {
       '2018-12-06': 'PT1H',
@@ -51,10 +59,11 @@ test('parseTimeTracking: two tags, two events', () => {
   expect(result).toEqual(expected)
 })
 
-test('parseTimeTracking: two events, date filtered', () => {
+test('parseTimeTracking: two events, date filtered', async () => {
   const since = moment('2010-01-01')
-  const iCalStr = iCalTwoEventsDateFiltered()
-  const result = parseTimeTracking(since, iCalStr)
+  const iCalPromise = okPromise(iCalTwoEventsDateFiltered())
+  const tt = new TaggedTime(iCalPromise, since)
+  const result = await tt.parseTimeTracking()
   const expected = {
     'music': {
       '2018-12-06': 'PT1H',
@@ -63,10 +72,11 @@ test('parseTimeTracking: two events, date filtered', () => {
   expect(result).toEqual(expected)
 })
 
-test('parseTimeTracking: case-insensitive', () => {
+test('parseTimeTracking: case-insensitive', async () => {
   const since = moment('2001-01-01')
-  const iCalStr = iCalMixedCaseTag()
-  const result = parseTimeTracking(since, iCalStr)
+  const iCalPromise = okPromise(iCalMixedCaseTag())
+  const tt = new TaggedTime(iCalPromise, since)
+  const result = await tt.parseTimeTracking()
   const expected = {
     'music': {
       '2018-12-06': 'PT1H',
@@ -75,10 +85,11 @@ test('parseTimeTracking: case-insensitive', () => {
   expect(result).toEqual(expected)
 })
 
-test('taggedEvents: two tags, two events', () => {
+test('taggedEvents: two tags, two events', async () => {
   const since = moment('2001-01-01')
-  const iCalStr = iCalTwoTagsTwoEvents()
-  const result = taggedEvents(since, iCalStr)
+  const iCalPromise = okPromise(iCalTwoTagsTwoEvents())
+  const tt = new TaggedTime(iCalPromise, since)
+  const result = await tt.taggedEvents()
 
   expect(result).toEqual({
     music: [
